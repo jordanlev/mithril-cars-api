@@ -27,12 +27,12 @@ function index() {
 	echo '<ul>';
 	echo '<li><code>GET</code> <b>/cars</b> - returns array of car objects (or empty array if no car records exist)</li>';
 	echo '<li><code>GET</code> <b>/cars/:id</b> - returns one car object (or empty object if nothing exists for the given id)</li>';
-	echo '<li><code>POST</code> <b>/cars</b> - accepts JSON object of car data and inserts it as a new record; returns new record id wrapped in an object (e.g. <code>{"id":xxx}</code>)</li>';
+	echo '<li><code>POST</code> <b>/cars</b> - accepts JSON object of car data and inserts it as a new record; returns new record</li>';
 	echo '<li><code>PUT</code> <b>/cars/:id</b> - accepts JSON object of car data and updates the existing record with the given id; returns nothing</li>';
 	echo '<li style="padding-bottom: 10px;"><code>DELETE</code> <b>/cars/:id</b> - deletes the car record with the given id; returns nothing</li>';
 	echo '<li><code>GET</code> <b>/manufacturers</b> - returns array of manufacturer objects (or empty array if no manufacturer records exist)</li>';
 	echo '<li><code>GET</code> <b>/manufacturers/:id</b> - returns one manufacturer object (or empty object if nothing exists for the given id)</li>';
-	echo '<li><code>POST</code> <b>/manufacturers</b> - accepts JSON object of manufacturer data and inserts it as a new record; returns new record id wrapped in an object (e.g. <code>{"id":xxx}</code>)</li>';
+	echo '<li><code>POST</code> <b>/manufacturers</b> - accepts JSON object of manufacturer data and inserts it as a new record; returns new record</li>';
 	echo '<li><code>PUT</code> <b>/manufacturers/:id</b> - accepts JSON object of manufacturer data and updates the existing record with the given id; returns nothing</li>';
 	echo '<li><code>DELETE</code> <b>/manufacturers/:id</b> - deletes the manufacturer record with the given id (but only if the id is not currently assigned to any car records); returns nothing</li>';
 }
@@ -71,8 +71,8 @@ function addCar() {
 	if ($error) {
 		exitWithError($error);
 	} else {
-		$id = dbInsertFromObject('cars', $data);
-		$json = json_encode(array('id' => $id));
+		$data->id = dbInsertFromObject('cars', $data);
+		$json = json_encode($data);
 		echo $json;
 	}
 }
@@ -129,8 +129,8 @@ function addManufacturer() {
 	if ($error) {
 		exitWithError($error);
 	} else {
-		$id = dbInsertFromObject('manufacturers', $data);
-		$json = json_encode(array('id' => $id));
+		$data->id = dbInsertFromObject('manufacturers', $data);
+		$json = json_encode($data);
 		echo $json;
 	}
 }
