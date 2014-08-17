@@ -1,5 +1,7 @@
 <?php
 
+header('Access-Control-Allow-Origin: *');
+
 require 'Slim/Slim.php';
 
 $app = new Slim();
